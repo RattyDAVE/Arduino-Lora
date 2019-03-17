@@ -3,41 +3,15 @@ The goal of this KISS TNC is to be able to use LoRa as the Physical Layer of an 
 
 apt-get install ax25-apps ax25-tools ax25-xtools
 
-echo "lora   G7EZW-0        19200    231     2       LoRa KISS_NO_CRC" >> /etc/ax25/axports
+echo "lora1   G7EZW-0        19200    231     2       LoRa KISS_NO_CRC" >> /etc/ax25/axports
 
 echo "[G7EZW-0 VIA lora1]" >> /etc/ax25/ax25d.conf
 echo "NOCALL   * * * * * *    L" >> /etc/ax25/ax25d.conf
 echo "default  * * * * * *    -       root /usr/sbin/ax25-node ax25-node" >> /etc/ax25/ax25d.conf
-
-
-
-
-
-
-```
-#!/bin/sh
-#start AX25 using port defined in /etc/ax25/axports, for me it's lora1
-/usr/sbin/kissattach -m 231 $1 $2 $3
-sleep 1
-#Set KISS mode to NO CRC
-/usr/sbin/kissparms -p $2 -c 1
-sleep 1
-#Set AX25 Parameter
-echo $2 > /proc/sys/net/ax25/ax0/standard_window_size
-echo 231 > /proc/sys/net/ax25/ax0/maximum_packet_length
-sleep 1
-#Set AX25 Daemon as configured in /etc/ax25/ax25d.conf
-/usr/sbin/ax25d
-sleep 1
-#Setup MHeard Daemon
-/usr/sbin/mheardd
-#end of script
-```
-
+`
 The command you can use to run the shell is:
 
 ```
-$ cd kiss-lora
 $ sudo ./kiss.sh <tty port> <ax25 port name> <window>
 ```
 
@@ -81,4 +55,4 @@ NOCALL   * * * * * *    L
 default  * * * * * *    -       root /usr/sbin/ax25-node ax25-node
 ```
 
-What the above configuration file means is that when a node calls for YD0SHY-1 on port lora1 it will answer by executing the program /usr/sbin/ax25-node ax25-node, the asterisks before indicate the AX.25 parameters you wish to use when running the program, the asterisks representing a "set as a default mode", so it will follow any configurations you have set on AX.25 ports, you can see the default at /proc/sys/net/ax25/ax0 (ax0 can be ax1, etc. if you have more than one AX.25 port).
+What the above configuration file means is that when a node calls for G7EZW-1 on port lora1 it will answer by executing the program /usr/sbin/ax25-node ax25-node, the asterisks before indicate the AX.25 parameters you wish to use when running the program, the asterisks representing a "set as a default mode", so it will follow any configurations you have set on AX.25 ports, you can see the default at /proc/sys/net/ax25/ax0 (ax0 can be ax1, etc. if you have more than one AX.25 port).
