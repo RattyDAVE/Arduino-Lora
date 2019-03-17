@@ -15,6 +15,9 @@ The command you can use to run the shell is:
 $ sudo ./kiss.sh <tty port> <ax25 port name> <window>
 ```
 
+./kiss.sh /dev/ttyUSB0 lora1 1
+
+
 Currently, there's a known bug that truncates frame if you send more than two packets consecutively, to prevent this from happening you can set standard_window_size to 1.
 
 Before running the shell, we need to make sure to set our KISS TNC in the config files:
