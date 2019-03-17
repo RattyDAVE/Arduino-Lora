@@ -1,5 +1,19 @@
 The goal of this KISS TNC is to be able to use LoRa as the Physical Layer of an AX.25 Radio Network. I have created a simple shell to execute commands to setup your KISS TNC on Raspberry Pi.
 
+
+apt-get install ax25-apps ax25-tools ax25-xtools
+
+echo "lora   G7EZW-0        19200    231     2       LoRa KISS_NO_CRC" >> /etc/ax25/axports
+
+echo "[G7EZW-0 VIA lora1]" >> /etc/ax25/ax25d.conf
+echo "NOCALL   * * * * * *    L" >> /etc/ax25/ax25d.conf
+echo "default  * * * * * *    -       root /usr/sbin/ax25-node ax25-node" >> /etc/ax25/ax25d.conf
+
+
+
+
+
+
 ```
 #!/bin/sh
 #start AX25 using port defined in /etc/ax25/axports, for me it's lora1
