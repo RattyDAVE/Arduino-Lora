@@ -14,3 +14,20 @@ kissattach /dev/ttyUSB0 ax0
 
 This will connect /dev/ttyUSB0 (the serial device to which the Arduino is connected) to the network interface called ax0 (see axports).
 In Debian the kissattach software can be found in the ax25-tools package.
+
+
+
+
+modprobe ax25
+modprobe mkiss
+/usr/sbin/kissattach /dev/ttyUSB0 ax0 44.131.255.1
+/usr/sbin/kissparms  -p ax0  -t 500  -s 200    -r 32       -l 100  -f n
+/sbin/route add -net 44.0.0.0 netmask 255.0.0.0 dev ax0
+
+
+
+
+/bin/ping -i 10 44.136.8.58   # (ping packets go out on RF each 10 secs, control-C to stop)
+
+/usr/bin/axcall aprs k7xyz via sea   # (Connect packets go out on RF)
+/usr/bin/axlisten -c -a  # (listens for packets and displays then in the term window, Control-C to stop)
